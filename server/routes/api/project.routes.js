@@ -10,6 +10,9 @@ router.post("/", auth, controller.createProject);
 //view all project
 router.get("/", controller.findAllProject);
 
+//view eight project
+router.get("/display", controller.findEightProject);
+
 //find one project
 router.get("/:id", controller.findOneProject);
 

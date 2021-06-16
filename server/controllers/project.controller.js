@@ -32,6 +32,22 @@ exports.findAllProject = (req, res) => {
     : {};
 
   Project.find(condition)
+    .sort({ createdAt: -1 })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred when retrieving project.",
+      });
+    });
+};
+
+//read 8 project only
+exports.findEightProject = (req, res) => {
+  Project.find()
+    .sort({ createdAt: -1 })
+    .limit(8)
     .then((data) => {
       res.send(data);
     })
