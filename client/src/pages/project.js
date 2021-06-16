@@ -19,14 +19,17 @@ const Project = () => {
   const handleClose = () => setShowModal("close");
   const handleShowModalOne = () => setShowModal("modal-one");
   const handleShowModalTwo = () => setShowModal("modal-two");
+  const handleChange = () => {
+    setRefreshKey((key) => key + 1);
+  };
 
   const handleDelete = async (id) => {
     try {
       setLoading(true);
       await authAxios.delete(`/api/project/${id}`);
-      setRefreshKey((key) => key + 1);
       history.push("/project");
       setLoading(false);
+      handleChange();
     } catch (error) {
       return "error occured";
     }
@@ -64,7 +67,11 @@ const Project = () => {
           >
             <FaPlusCircle /> Add Project
           </Button>
-          <AddProjectModal isShow={showModal} isClose={handleClose} />
+          <AddProjectModal
+            onChange={handleChange}
+            isShow={showModal}
+            isClose={handleClose}
+          />
         </div>
         <Table striped bordered hover className="text-center">
           <thead>
@@ -92,6 +99,7 @@ const Project = () => {
                     <FaPenSquare />
                   </Button>
                   <ProjectDetailModal
+                    onChange={handleChange}
                     entry={selectedData}
                     isShow={showModal}
                     isClose={handleClose}

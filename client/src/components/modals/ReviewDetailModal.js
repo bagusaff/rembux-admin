@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Button, Modal, Form, Spinner, Image } from "react-bootstrap";
+import { Button, Modal, Form, Spinner, Image, Alert } from "react-bootstrap";
 import axios from "axios";
 import { authAxios } from "../../services/axios.service";
+import { useHistory } from "react-router-dom";
 
-const ReviewDetailModal = ({ entry, isShow, isClose }) => {
+const ReviewDetailModal = ({ onChange, entry, isShow, isClose }) => {
   const cloudinary_id = process.env.REACT_APP_CLOUDINARY_ID;
   const cloudinary_preset = process.env.REACT_APP_CLOUDINARY_PRESET_REVIEW;
+  const history = useHistory();
 
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const [editedData, setEditedData] = useState({
     id: entry._id,
@@ -59,13 +62,14 @@ const ReviewDetailModal = ({ entry, isShow, isClose }) => {
         .put(`/api/review/${entry._id}`, formData)
         .then((res) => {
           console.log(res);
-          setLoading(false);
-          window.location.reload();
+          setSuccess(true);
         })
         .catch((error) => {
           console.log(error);
         });
+      history.push("/review");
       setLoading(false);
+      onChange();
     } catch (error) {
       console.log(error);
     }
@@ -84,6 +88,20 @@ const ReviewDetailModal = ({ entry, isShow, isClose }) => {
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={onSubmit} encType="multipart/form-data">
+          {success && (
+            <Alert variant="success" onClose={() => setSuccess(false)}>
+              <Alert.Heading>Berhasil!</Alert.Heading>
+              <p>Review berhasil diperbarui!</p>
+              <div className="d-flex justify-content-end">
+                <Button
+                  onClick={() => setSuccess(false)}
+                  variant="outline-success"
+                >
+                  Sembunyikan notifikasi
+                </Button>
+              </div>
+            </Alert>
+          )}
           <Form.Group controlId="clientName">
             <Form.Label>Your Name</Form.Label>
             <Form.Control

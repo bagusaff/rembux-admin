@@ -20,14 +20,16 @@ const Review = () => {
   const handleClose = () => setShowModal("close");
   const handleShowModalOne = () => setShowModal("modal-one");
   const handleShowModalTwo = () => setShowModal("modal-two");
-
+  const handleChange = () => {
+    setRefreshKey((key) => key + 1);
+  };
   const handleDelete = async (id) => {
     try {
       setLoading(true);
       await authAxios.delete(`/api/review/${id}`);
-      setRefreshKey((key) => key + 1);
       history.push("/review");
       setLoading(false);
+      handleChange();
     } catch (error) {
       return "error occured";
     }
@@ -65,7 +67,11 @@ const Review = () => {
           >
             <FaPlusCircle /> Add Testimonial
           </Button>
-          <AddReviewModal isShow={showModal} isClose={handleClose} />
+          <AddReviewModal
+            onChange={handleChange}
+            isShow={showModal}
+            isClose={handleClose}
+          />
         </div>
         <Table striped bordered hover className="text-center">
           <thead>
@@ -89,6 +95,7 @@ const Review = () => {
                     <FaPenSquare />
                   </Button>
                   <ReviewDetailModal
+                    onChange={handleChange}
                     entry={selectedData}
                     isShow={showModal}
                     isClose={handleClose}

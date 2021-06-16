@@ -12,6 +12,10 @@ created using React
 
 - fix reload crash after insert new data
 
+- no need to reload after update/insert/deleting data
+
+- success notification when update/insert data
+
 ## todo
 
 - finish the backend (done)

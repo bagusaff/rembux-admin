@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 
 import { authAxios } from "../../services/axios.service";
 
-const AddReviewModal = ({ isShow, isClose }) => {
+const AddReviewModal = ({ onChange, isShow, isClose }) => {
   const cloudinary_id = process.env.REACT_APP_CLOUDINARY_ID;
   const cloudinary_preset = process.env.REACT_APP_CLOUDINARY_PRESET_REVIEW;
   const history = useHistory();
@@ -24,10 +24,8 @@ const AddReviewModal = ({ isShow, isClose }) => {
       photo: "",
     },
   });
-
   const onSubmit = async (data, e) => {
     const { files } = document.querySelector('input[type="file"]');
-    console.log(files);
     if (files.length !== 0) {
       setLoading(true);
       const formData = new FormData();
@@ -60,6 +58,7 @@ const AddReviewModal = ({ isShow, isClose }) => {
           console.log(e);
         });
       setLoading(false);
+      onChange();
       reset();
       history.push("/review");
     } catch (err) {

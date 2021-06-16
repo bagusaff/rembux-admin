@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 
 import { authAxios } from "../../services/axios.service";
 
-const AddProjectModal = ({ isShow, isClose }) => {
+const AddProjectModal = ({ onChange, isShow, isClose }) => {
   const cloudinary_id = process.env.REACT_APP_CLOUDINARY_ID;
   const cloudinary_preset = process.env.REACT_APP_CLOUDINARY_PRESET_PROJECT;
   const history = useHistory();
@@ -58,13 +58,13 @@ const AddProjectModal = ({ isShow, isClose }) => {
       await authAxios
         .post("/api/project/", data)
         .then((res) => {
-          console.log(res.data);
           setSuccess(true);
         })
         .catch((e) => {
           console.log(e);
         });
       setLoading(false);
+      onChange();
       history.push("/project");
       reset();
     } catch (err) {
