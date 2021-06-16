@@ -3,13 +3,14 @@ import React, { useState } from "react";
 import { Button, Modal, Form, Spinner, Alert } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
 
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { authAxios } from "../../services/axios.service";
 
 const AddProjectModal = ({ isShow, isClose }) => {
   const cloudinary_id = process.env.REACT_APP_CLOUDINARY_ID;
   const cloudinary_preset = process.env.REACT_APP_CLOUDINARY_PRESET_PROJECT;
+  const history = useHistory();
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -64,6 +65,7 @@ const AddProjectModal = ({ isShow, isClose }) => {
           console.log(e);
         });
       setLoading(false);
+      history.push("/project");
       reset();
     } catch (err) {
       console.log(err);

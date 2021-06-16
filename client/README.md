@@ -8,10 +8,14 @@ created using React
 
 - modals and buttons are functional
 
+## 16-06-2021
+
+- fix reload crash after insert new data
+
 ## todo
 
-- finish the backend
+- finish the backend (done)
 
-- connect the backend to the frontend
+- connect the backend to the frontend (done)
 
-- create login form
+- create login form (done)

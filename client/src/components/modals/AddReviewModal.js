@@ -3,11 +3,14 @@ import { Button, Modal, Form, Spinner, Alert } from "react-bootstrap";
 import axios from "axios";
 import { Controller, useForm } from "react-hook-form";
 
+import { useHistory } from "react-router-dom";
+
 import { authAxios } from "../../services/axios.service";
 
 const AddReviewModal = ({ isShow, isClose }) => {
   const cloudinary_id = process.env.REACT_APP_CLOUDINARY_ID;
   const cloudinary_preset = process.env.REACT_APP_CLOUDINARY_PRESET_REVIEW;
+  const history = useHistory();
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -58,7 +61,7 @@ const AddReviewModal = ({ isShow, isClose }) => {
         });
       setLoading(false);
       reset();
-      window.location.reload();
+      history.push("/review");
     } catch (err) {
       console.log(err);
     }
